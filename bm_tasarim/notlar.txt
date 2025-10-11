@@ -1,0 +1,19 @@
+1. neden heap_1.c kullanıldı: çünkü diğerlerinde malloc gibi metotlar var. malloc metodu çalışırken dinamik olarak yer arıyor ve bu yüzden zamanın deterministik olma şartı ihlal edilebilir. Bu yüzden ön tanımllı büyüklükte yer alınıp bırakılması deterministiklik şartını sağlar.
+2. Gerçek Sistemlerde (Genel)
+Gerçek zamanlı olmayan sistemlerde (örneğin Linux, glibc malloc):
+Daha karmaşık algoritmalar kullanılır:
+First-fit, Best-fit, Buddy system, TLSF (Two Level Segregated Fit) vb.
+Çoğu “coalescing” işlemini lazy (tembel) yapar:
+Yani anında değil, sonradan uygun olduğunda birleştirir.
+Bazıları “bellek sayfalarını (pages)” işletim sistemine iade edebilir.
+Gerçek zamanlı (RTOS) sistemlerde ise:
+Coalescing genellikle sınırlı veya yasaklanmıştır
+çünkü birleştirme süresi değişken → nondeterministik olur.
+Bunun yerine sabit boyutlu blok ayırma (fixed-block allocator) kullanılır
+(örnek: “memory pool”).
+3. bump yöntemi ile ilerleniyor. stack gibi yer işgal edildikçe sayaç ileri gidiyor. eğer gerilerden bir görevin işi biterse görev kendini reclaim list içine ekliyor. listenin boyutu sabit olduğu için deterministlikte sorun yok. 
+4. loglama sistemi kurulması iyi olur.
+5. 64kb ram var
+6. partitionlar arası erişimin denetimi için MPU kullanılacak.
+7. sunumda heap 1 2 3 4 5 arasındaki farklar bir tabloda toplanabilir
+8. 
