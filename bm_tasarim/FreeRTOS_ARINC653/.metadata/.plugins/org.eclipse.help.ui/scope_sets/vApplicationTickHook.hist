@@ -1,0 +1,4 @@
+#Wed Oct 15 11:01:27 TRT 2025
+__DEFAULT__=false
+expression=vApplicationTickHook
+org.eclipse.help.ui.localSearch.master=true
