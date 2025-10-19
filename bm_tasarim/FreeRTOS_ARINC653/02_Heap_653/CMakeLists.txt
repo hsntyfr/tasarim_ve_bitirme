@@ -19,7 +19,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 # Set the project name
-set(CMAKE_PROJECT_NAME 01_FreeRTOS_Base)
+set(CMAKE_PROJECT_NAME 02_Heap_653)
 
 # Enable compile command to ease indexing with e.g. clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
@@ -56,6 +56,8 @@ target_include_directories(freertos_config INTERFACE
 target_compile_definitions(freertos_config INTERFACE
     projCOVERAGE_TEST=0
 )
+
+set(FREERTOS_HEAP "4" CACHE STRING "FreeRTOS heap implementation")
 
 set(FREERTOS_PORT GCC_ARM_CM4F CACHE STRING "FreeRTOS port layer selection")
 

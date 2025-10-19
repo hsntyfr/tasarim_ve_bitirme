@@ -75,3 +75,16 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/hasan
 
 !ENTRY org.eclipse.help.base 2 0 2025-10-15 11:01:21.455
 !MESSAGE Unable to consume Lucene index from bundle 'org.eclipse.cdt.doc.user_11.6.1.202406241230 [177]'. The index should be rebuilt with Lucene 9.11.1
+!SESSION 2025-10-19 04:32:18.327 -----------------------------------------------
+eclipse.buildId=Version 1.19.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=tr_TR
+Framework arguments:  -keyring /Users/hasantayfur/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/hasantayfur/.eclipse_keyring
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-10-19 04:32:28.493
+!MESSAGE Log4j2 initialized with config file /Users/hasantayfur/tasarim_ve_bitirme/bm_tasarim/FreeRTOS_ARINC653/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-10-19 04:32:36.598
+!MESSAGE Started RMI Server, listening on port 41337

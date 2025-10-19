@@ -16,4 +16,47 @@ Bunun yerine sabit boyutlu blok ayırma (fixed-block allocator) kullanılır
 5. 64kb ram var
 6. partitionlar arası erişimin denetimi için MPU kullanılacak.
 7. sunumda heap 1 2 3 4 5 arasındaki farklar bir tabloda toplanabilir
-8. 
+8. 🎯 Önerilen Bölüm Yapısı (FreeRTOS & ARINC 653 Projesi için)
+BÖLÜM 1. GİRİŞ
+Gerçek zamanlı sistemlerin önemi
+Havacılık sistemlerinde güvenlik ve deterministik davranış ihtiyacı
+ARINC 653 standardının amacı
+Çalışmanın hedefi (FreeRTOS üzerinde ARINC 653 servislerinin gerçekleştirilmesi)
+Raporun genel yapısı
+BÖLÜM 2. MEVCUT YAKLAŞIMLAR VE LİTERATÜR İNCELEMESİ
+ARINC 653 standardının genel yapısı
+Benzer çalışmalarda kullanılan RTOS’lar (Deos, VxWorks 653, PikeOS vb.)
+FreeRTOS’un yapısı ve kısıtları
+Mevcut çözümler ile bu projenin farklı yönleri
+BÖLÜM 3. KULLANILAN TEKNOLOJİLER VE ARAÇLAR
+Donanım platformu (STM32 serisi, bellek yapısı, MPU kullanımı)
+Yazılım araçları (FreeRTOS, CubeIDE veya VS Code + CMake, ARM Toolchain)
+Standart ve dokümanlar (DO-178C, ARINC 653 Part 1/2)
+Destekleyici araçlar (Git, Simülasyon, Debugging, SWO vb.)
+BÖLÜM 4. SİSTEM TASARIMI
+Genel sistem mimarisi (Partition yapısı, APEX katmanı, görevler)
+Bellek ve zaman izolasyonu (MPU yapılandırması)
+FreeRTOS tasklerinin ARINC 653 Partition’larına haritalanması
+APEX servislerinin implementasyonu
+Process Management
+Inter-Partition Communication
+Time Management
+Health Monitoring
+Zamanlayıcı yapısı (partition scheduler + task scheduler ilişkisi)
+BÖLÜM 5. UYGULAMA VE TESTLER
+Deney ortamı (STM32 kartı, simülasyon veya emülasyon ortamı)
+Test senaryoları
+Task izolasyonu testi
+Partition switching testi
+Sağlık izleme (Health Monitor) testi
+Sonuçların değerlendirilmesi
+BÖLÜM 6. SONUÇLAR VE ÖNERİLER
+FreeRTOS üzerinde ARINC 653 servislerinin uygulanabilirliği
+Karşılaşılan kısıtlar (örneğin deterministiklik, hafıza sınırlamaları)
+Gelecek çalışmalar (örneğin çok çekirdek desteği, DO-178C uyumlaştırması)
+KAYNAKLAR
+EKLER
+APEX API tablosu
+MPU konfigürasyon örnekleri
+Görev planlama diyagramı
+9.
