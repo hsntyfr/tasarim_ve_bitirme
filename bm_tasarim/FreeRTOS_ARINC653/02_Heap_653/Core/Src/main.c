@@ -1,46 +1,37 @@
 #include "main.h"
-#include "FreeRTOS.h"
-#include "task.h"
+
 
 void SystemClock_Config(void);
-static void MX_GPIO_Init(void);
 
-void LedTask(void *argument);
-
-void LedTask(void *argument)
-{
-    for (;;)
-    {
-        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);  // PA5 - Dahili LED
-        vTaskDelay(pdMS_TO_TICKS(500));
-    }
-}
-
-static void MX_GPIO_Init(void)
-{
-    __HAL_RCC_GPIOA_CLK_ENABLE();  // GPIOA clock'u aktif et
-
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
-    GPIO_InitStruct.Pin = GPIO_PIN_5;           // PA5 pini
-    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);     // GPIOA'ya uygula
-}
 
 int main(void)
 {
   HAL_Init();
-
-
   SystemClock_Config();
-  
-  MX_GPIO_Init();
+  UART_HandleTypeDef log_handler_uart;
+  Log_Handler_Init(&log_handler_uart);
+  Redirect_Printf_to_UART(&log_handler_uart);
 
-  
-  xTaskCreate(LedTask, "LED", 128, NULL, 1, NULL);
 
-  vTaskStartScheduler();
+
+/*
+  UART_HandleTypeDef log_handler_uart;
+  log_handler_uart.Instance = USART1;
+  log_handler_uart.Init.BaudRate = 115200;
+  log_handler_uart.Init.WordLength = UART_WORDLENGTH_8B;
+  log_handler_uart.Init.StopBits = UART_STOPBITS_1;
+  log_handler_uart.Init.Parity = UART_PARITY_NONE;
+  log_handler_uart.Init.Mode = UART_MODE_TX_RX;
+  log_handler_uart.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+
+  if (HAL_UART_Init(&log_handler_uart) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+*/
+
+
 
   while (1)
   {

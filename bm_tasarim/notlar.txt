@@ -59,4 +59,124 @@ EKLER
 APEX API tablosu
 MPU konfigürasyon örnekleri
 Görev planlama diyagramı
-9.
+9.🧩 1️⃣ PARTITION MANAGEMENT SERVICES
+Amaç: Sistemdeki partition’ların yönetimi.
+Partition = izole edilmiş bir uygulama alanı.
+Fonksiyon	Açıklama
+SET_PARTITION_MODE()	Partition’ı COLD_START, WARM_START, NORMAL veya IDLE moda geçirir.
+GET_PARTITION_STATUS()	Partition’ın kimliği, modu, zamanı gibi bilgileri döner.
+🟩 Not: Genelde bu çağrılar sadece sistem başlangıcında (partition initialization aşamasında) yapılabilir.
+⚙️ 2️⃣ PROCESS MANAGEMENT SERVICES
+Amaç: FreeRTOS’taki task’lerin APEX karşılığı.
+Her process bir partition içinde çalışır.
+Fonksiyon	Açıklama
+CREATE_PROCESS()	Yeni bir process (task) oluşturur.
+START()	Process’i çalıştırılabilir (ready) hâline getirir.
+STOP_SELF()	Process kendi kendini durdurur.
+STOP()	Başka bir process’i durdurur.
+DELAYED_START()	Belirli bir zaman sonra process başlatır.
+SUSPEND_SELF()	Process kendi kendini askıya alır.
+SUSPEND()	Başka bir process’i askıya alır.
+RESUME()	Askıya alınmış bir process’i yeniden başlatır.
+SET_PRIORITY()	Process’in önceliğini değiştirir.
+GET_PROCESS_ID()	Mevcut process’in kimliğini döner.
+GET_PROCESS_STATUS()	Process’in durumu, önceliği, zamanı vb. bilgilerini verir.
+🟦 FreeRTOS karşılığı:
+xTaskCreate(), vTaskDelete(), vTaskSuspend(), vTaskResume(), vTaskPrioritySet(), vb.
+⏱️ 3️⃣ TIME MANAGEMENT SERVICES
+Amaç: Zamanla ilgili işlemler (sistem saati, gecikmeler, timer’lar).
+Fonksiyon	Açıklama
+GET_TIME()	Şu anki sistem zamanını döner.
+REPLENISH()	(Bazı sistemlerde) zaman bölüşümünü günceller.
+TIMED_WAIT()	Belirtilen süre kadar bekler (FreeRTOS’taki vTaskDelay() benzeri).
+PERIODIC_WAIT()	Periodik görevler için zamanlamayı ayarlar (örneğin her 20 ms çalış).
+GET_PARTITION_TIME()	Partition’ın iç saatini verir.
+SET_PARTITION_TIME()	(Opsiyonel) Partition’ın iç saatini ayarlamak için.
+🟨 FreeRTOS karşılığı:
+vTaskDelay(), xTaskGetTickCount(), xTimer... fonksiyonları.
+🔄 4️⃣ INTER-PARTITION COMMUNICATION SERVICES
+Amaç: Farklı partition’lar arasında mesajlaşma (IPC).
+İki tür var: Sampling Port ve Queuing Port.
+🧭 a) Sampling Port Services
+Fonksiyon	Açıklama
+CREATE_SAMPLING_PORT()	Bir “tek mesajlık” haberleşme portu oluşturur.
+WRITE_SAMPLING_MESSAGE()	Yeni bir mesajı porta yazar (önceki mesajı ezer).
+READ_SAMPLING_MESSAGE()	Porttaki en son mesajı okur.
+GET_SAMPLING_PORT_ID()	Sampling port kimliğini döner.
+GET_SAMPLING_PORT_STATUS()	Portun durumu, refresh zamanı vb. verir.
+🟢 Özellik: Sadece en son mesaj saklanır.
+🧳 b) Queuing Port Services
+Fonksiyon	Açıklama
+CREATE_QUEUING_PORT()	FIFO tarzı bir mesaj kuyruğu oluşturur.
+SEND_QUEUING_MESSAGE()	Kuyruğa yeni mesaj ekler.
+RECEIVE_QUEUING_MESSAGE()	Kuyruktan mesaj alır.
+GET_QUEUING_PORT_ID()	Kuyruk kimliğini döner.
+GET_QUEUING_PORT_STATUS()	Kuyruk doluluk, yön vb. bilgileri verir.
+🟣 Özellik: Mesajlar bir sıra (queue) hâlinde saklanır.
+🟨 FreeRTOS karşılığı: xQueueCreate(), xQueueSend(), xQueueReceive().
+💬 5️⃣ INTRA-PARTITION COMMUNICATION SERVICES
+Amaç: Aynı partition içindeki process’ler arasında veri paylaşımı.
+a) Buffer
+Fonksiyon	Açıklama
+CREATE_BUFFER()	FIFO buffer oluşturur.
+SEND_BUFFER()	Mesajı buffer’a gönderir.
+RECEIVE_BUFFER()	Buffer’dan mesaj alır.
+GET_BUFFER_ID()	Buffer kimliğini döner.
+GET_BUFFER_STATUS()	Buffer’daki mesaj sayısını verir.
+b) Blackboard
+Fonksiyon	Açıklama
+CREATE_BLACKBOARD()	Ortak hafıza alanı oluşturur.
+DISPLAY_BLACKBOARD()	Mesajı yaz (önceki mesajı ezer).
+READ_BLACKBOARD()	Son yazılan mesajı okur.
+CLEAR_BLACKBOARD()	Blackboard’u temizler.
+GET_BLACKBOARD_ID()	Blackboard kimliğini döner.
+GET_BLACKBOARD_STATUS()	Durum bilgisi verir.
+c) Semaphore
+Fonksiyon	Açıklama
+CREATE_SEMAPHORE()	Sayıcı semafor oluşturur.
+WAIT_SEMAPHORE()	Semaforu alır (0 ise bekler).
+SIGNAL_SEMAPHORE()	Semaforu bırakır.
+GET_SEMAPHORE_ID()	Semafor kimliğini döner.
+GET_SEMAPHORE_STATUS()	Semaforun değerini döner.
+d) Event
+Fonksiyon	Açıklama
+SET_EVENT()	Bir process’e olay sinyali gönderir.
+RESET_EVENT()	Olayı sıfırlar.
+WAIT_EVENT()	Olayın gerçekleşmesini bekler.
+GET_EVENT_ID()	Event kimliğini döner.
+GET_EVENT_STATUS()	Olayın mevcut durumunu döner.
+🟦 FreeRTOS karşılığı: queue, semaphore, event group, shared memory, vb.
+🛡️ 6️⃣ HEALTH MONITORING SERVICES
+Amaç: Hataların izlenmesi ve yönetimi.
+Her partition’ın kendi health monitor’ü vardır.
+Fonksiyon	Açıklama
+REPORT_APPLICATION_ERROR()	Bir hata raporu oluşturur.
+CREATE_ERROR_HANDLER()	Partition seviyesinde özel hata yöneticisi oluşturur.
+🟥 Not: Sistem hataları (örneğin illegal memory access) için merkezi bir System Health Monitor de bulunur.
+⚠️ 7️⃣ ERROR HANDLING SERVICES
+Amaç: APEX çağrılarından dönen hata kodları.
+Her APEX fonksiyonu genelde RETURN_CODE_TYPE isimli bir parametre döner:
+NO_ERROR
+INVALID_PARAM
+INVALID_MODE
+NOT_AVAILABLE
+TIMED_OUT
+...
+Yani hata durumları standartlaştırılmıştır.
+🧮 8️⃣ PROCESS SCHEDULING PARAMETERS
+Amaç: Process zamanlaması ile ilgili sabitler ve tipler.
+Tanım	Açıklama
+APERIODIC / PERIODIC	Görev tipi.
+DEADLINE_TYPE	Zaman aşımı türü.
+PROCESS_ATTRIBUTE_TYPE	Process oluşturulurken kullanılan yapı (isim, yığın, öncelik, periyot vb.).
+🔚 Özet Tablo
+Grup	İşlev	FreeRTOS Karşılığı
+Partition Management	Partition modları	Yok (statik yapı)
+Process Management	Task yönetimi	Task API
+Time Management	Zaman işlemleri	Delay / Tick API
+Inter-Partition Comm	Portlar (IPC)	Yok (kendi protokolü)
+Intra-Partition Comm	Queue / Semaphore / Event	Queue / Semaphores / EventGroups
+Health Monitoring	Hata izleme	Yok (kendin eklersin)
+Error Handling	Hata kodları	Return değerleri
+Scheduling Params	Priority / Deadline	Task priority, tick rate
+10.
