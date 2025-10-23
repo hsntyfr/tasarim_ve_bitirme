@@ -1,0 +1,9 @@
+#ifndef __LOG_HANDLER_H
+#define __LOG_HANDLER_H
+
+
+HAL_StatusTypeDef de();
+HAL_     
+
+
+#endif /*__LOG_HANDLER_H*/

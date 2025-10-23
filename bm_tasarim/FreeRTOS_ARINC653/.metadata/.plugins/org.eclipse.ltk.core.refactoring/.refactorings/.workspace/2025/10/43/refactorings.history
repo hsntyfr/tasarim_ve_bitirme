@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;03_Heap_653/Core/Inc/logger&apos;" deleteContents="false" description="Delete resource &apos;03_Heap_653/Core/Inc/logger&apos;" element1="/03_Heap_653/Core/Inc/logger" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1761166344339"/>&#x0A;<refactoring comment="Delete 2 resources" deleteContents="false" description="Delete 2 resources" element1="/03_Heap_653/Core/Inc/logger.h" element2="/03_Heap_653/Core/Src/logger.c" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="2" stamp="1761166378286"/>
+</session>

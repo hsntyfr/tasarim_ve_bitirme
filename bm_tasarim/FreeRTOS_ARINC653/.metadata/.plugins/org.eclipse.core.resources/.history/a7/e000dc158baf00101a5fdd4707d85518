@@ -1,0 +1,8 @@
+#include "log_handler.h"
+#include "main.h"
+
+HAL_StatusTypeDef Redirect_Printf_To_USART(HAL_UART_HandleTypeDef* huart){
+
+
+	return HAL_OK
+}

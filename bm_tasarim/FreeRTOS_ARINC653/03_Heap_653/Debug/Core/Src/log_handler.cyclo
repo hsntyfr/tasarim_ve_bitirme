@@ -1,0 +1,2 @@
+../Core/Src/log_handler.c:6:19:Redirect_Printf_To_USART	1
+../Core/Src/log_handler.c:13:5:_write	1

@@ -1,0 +1,8 @@
+#ifndef __LOG_HANDLER_H
+#define __LOG_HANDLER_H
+
+
+HAL_StatusTypeDef Redirect_Printf_To_USART(HAL_UART_HandleTypeDef*);
+
+
+#endif /*__LOG_HANDLER_H*/

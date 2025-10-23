@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+ 
+       {
+            "name": "Cortex Debug",
+            "type": "cortex-debug",
+            "request": "launch",
+            "servertype": "stlink",
+            "cwd": "${workspaceFolder}",
+            "executable": "./build/Debug/04_Heap_653.elf",
+            "runToEntryPoint": "main",
+            "preLaunchTask": "Build STM32",
+
+        }
+    ]
+}

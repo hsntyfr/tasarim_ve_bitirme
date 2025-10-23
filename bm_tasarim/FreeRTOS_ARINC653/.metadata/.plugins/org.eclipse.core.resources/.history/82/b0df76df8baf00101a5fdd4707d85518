@@ -1,0 +1,17 @@
+#include "log_handler.h"
+
+
+static UART_HandleTypeDef* s_Printf_USART = NULL;
+
+HAL_StatusTypeDef Redirect_Printf_To_USART(UART_HandleTypeDef* huart){
+
+	s_Printf_USART = huart;
+
+	return HAL_OK;
+}
+
+int _write(int file, char *ptr, int len)
+{
+    HAL_UART_Transmit(&s_Printf_USART, (uint8_t*)ptr, len, HAL_MAX_DELAY);
+    return len;
+}

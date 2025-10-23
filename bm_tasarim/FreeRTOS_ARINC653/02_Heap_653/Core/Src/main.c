@@ -35,7 +35,8 @@ int main(void)
 
   while (1)
   {
-
+    printf("Hello, UART Logging!\r\n");
+    HAL_Delay(1000);
   }
 
 }
