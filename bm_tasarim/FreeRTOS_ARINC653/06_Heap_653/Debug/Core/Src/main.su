@@ -1,0 +1,9 @@
+../Core/Src/main.c:73:6:BlinkTaskOff	16	static
+../Core/Src/main.c:82:8:BlinkTaskOn	16	static
+../Core/Src/main.c:94:5:main	16	static
+../Core/Src/main.c:151:6:SystemClock_Config	160	static
+../Core/Src/main.c:198:13:MX_CRC_Init	8	static
+../Core/Src/main.c:229:13:MX_USART3_UART_Init	8	static
+../Core/Src/main.c:262:13:MX_DMA_Init	16	static
+../Core/Src/main.c:280:13:MX_GPIO_Init	48	static
+../Core/Src/main.c:330:6:Error_Handler	4	static,ignoring_inline_asm

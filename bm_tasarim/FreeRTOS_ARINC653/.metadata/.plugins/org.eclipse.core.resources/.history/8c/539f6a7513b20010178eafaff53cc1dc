@@ -1,0 +1,6 @@
+MiddleWares/SEGGER/RTT/Examples/Main_RTT_MenuApp.o: \
+ ../MiddleWares/SEGGER/RTT/Examples/Main_RTT_MenuApp.c \
+ /Users/hasantayfur/tasarim_ve_bitirme/bm_tasarim/FreeRTOS_ARINC653/06_Heap_653/MiddleWares/SEGGER/RTT/RTT/SEGGER_RTT.h \
+ /Users/hasantayfur/tasarim_ve_bitirme/bm_tasarim/FreeRTOS_ARINC653/06_Heap_653/MiddleWares/SEGGER/RTT/Config/SEGGER_RTT_Conf.h
+/Users/hasantayfur/tasarim_ve_bitirme/bm_tasarim/FreeRTOS_ARINC653/06_Heap_653/MiddleWares/SEGGER/RTT/RTT/SEGGER_RTT.h:
+/Users/hasantayfur/tasarim_ve_bitirme/bm_tasarim/FreeRTOS_ARINC653/06_Heap_653/MiddleWares/SEGGER/RTT/Config/SEGGER_RTT_Conf.h:
