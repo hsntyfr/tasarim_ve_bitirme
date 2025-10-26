@@ -1,122 +1,59 @@
-/* USER CODE BEGIN Header */
-/**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart3;
 DMA_HandleTypeDef hdma_usart3_tx;
 
-/* USER CODE BEGIN PV */
 
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_USART3_UART_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
+int _write(int file, char *ptr, int len)
+{
+    HAL_UART_Transmit(&huart3, (uint8_t *)ptr, len, HAL_MAX_DELAY);
+    return len;
+}
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
-void BlinkTask(void *pvParameters)
+void BlinkTaskOff(void *pvParameters)
 {
     (void)pvParameters;
 
     for(;;)
     {
-        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-        vTaskDelay(pdMS_TO_TICKS(500)); // 500 ms bekle
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+    }
+}
+void BlinkTaskOn(void *pvParameters)
+{
+    (void)pvParameters;
+
+    for(;;)
+    {
+      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
+
     }
 }
 int main(void)
 {
 
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
-
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
-
-  /* USER CODE BEGIN Init */
-
-  /* USER CODE END Init */
-
-  /* Configure the system clock */
   SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART3_UART_Init();
-  /* USER CODE BEGIN 2 */
+  xTaskCreate(BlinkTaskOff, "BlinkOff", 128, NULL, 1, NULL);
+  xTaskCreate(BlinkTaskOn, "BlinkOn", 128, NULL, 1, NULL);
 
-  /* USER CODE END 2 */
+  
+  uint8_t tx_data[] = "Merhaba DMA!\r\n";
 
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
-  xTaskCreate(BlinkTask, "Blink", 128, NULL, 1, NULL);
+  HAL_UART_Transmit_DMA(&huart3, tx_data, strlen((char*)tx_data));
   vTaskStartScheduler();
   while (1)
   {
-    /* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
 }
 
 /**
@@ -169,14 +106,6 @@ void SystemClock_Config(void)
   */
 static void MX_USART3_UART_Init(void)
 {
-
-  /* USER CODE BEGIN USART3_Init 0 */
-
-  /* USER CODE END USART3_Init 0 */
-
-  /* USER CODE BEGIN USART3_Init 1 */
-
-  /* USER CODE END USART3_Init 1 */
   huart3.Instance = USART3;
   huart3.Init.BaudRate = 115200;
   huart3.Init.WordLength = UART_WORDLENGTH_8B;
@@ -191,15 +120,9 @@ static void MX_USART3_UART_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN USART3_Init 2 */
-
-  /* USER CODE END USART3_Init 2 */
 
 }
 
-/**
-  * Enable DMA controller clock
-  */
 static void MX_DMA_Init(void)
 {
 
