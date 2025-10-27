@@ -6,6 +6,7 @@ extern "C" {
 #endif
 
 #include "stm32f3xx_hal.h"
+#include "SEGGER_SYSVIEW_FreeRTOS.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include <stdio.h>

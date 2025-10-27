@@ -56,7 +56,7 @@ extern uint32_t SystemCoreClock;
 #define configTICK_RATE_HZ				( ( TickType_t ) 1000 )
 #define configMAX_PRIORITIES			( 5 )
 #define configMINIMAL_STACK_SIZE		( ( unsigned short ) 130 )
-#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 50 * 1024 ) )
+#define configTOTAL_HEAP_SIZE			( ( size_t ) ( 40 * 1024 ) )
 #define configMAX_TASK_NAME_LEN			( 10 )
 #define configUSE_TRACE_FACILITY		1
 #define configUSE_16_BIT_TICKS			0
@@ -70,6 +70,9 @@ extern uint32_t SystemCoreClock;
 #define configUSE_COUNTING_SEMAPHORES	1
 #define configGENERATE_RUN_TIME_STATS	0
 #define configUSE_TIME_SLICING   		1
+
+#define configUSE_TRACE_FACILITY       1
+#define configUSE_STATS_FORMATTING_FUNCTIONS 1
 
 
 /* Co-routine definitions. */
@@ -91,6 +94,9 @@ to exclude the API function. */
 #define INCLUDE_vTaskSuspend			1
 #define INCLUDE_vTaskDelayUntil			1
 #define INCLUDE_vTaskDelay				1
+#define INCLUDE_xTaskGetIdleTaskHandle	1
+#define INCLUDE_pxTaskGetStackStart		1
+
 
 /* Cortex-M specific definitions. */
 #ifdef __NVIC_PRIO_BITS
@@ -126,6 +132,8 @@ standard names. */
 #define vPortSVCHandler SVC_Handler
 #define xPortPendSVHandler PendSV_Handler
 #define xPortSysTickHandler SysTick_Handler
+
+#include "SEGGER_SYSVIEW_FreeRTOS.h"
 
 #endif /* FREERTOS_CONFIG_H */
 

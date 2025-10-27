@@ -1,12 +1,27 @@
 {
     "version": "0.2.0",
     "configurations": [
- 
+        {
+            "cwd": "${workspaceFolder}",
+            "executable": "./build/Debug/05_Heap_653.elf",
+            "name": "Debug with JLink",
+            "request": "launch",
+            "type": "cortex-debug",
+            "device": "STM32F303RE",
+            "rtos": "FreeRTOS",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+            "servertype": "jlink",
+            "preLaunchTask": "Build STM32",
+
+        },
+
        {
             "name": "Cortex Debug",
             "type": "cortex-debug",
             "request": "launch",
-            "servertype": "stlink",
+            "servertype": "jlink",
+            "device": "STM32F303RE",
             "cwd": "${workspaceFolder}",
             "executable": "./build/Debug/05_Heap_653.elf",
             "runToEntryPoint": "main",
@@ -14,23 +29,7 @@
 
 
         },
-        {
-            "name": "STM32 Debug (OpenOCD + FreeRTOS)",
-            "type": "cortex-debug",
-            "request": "launch",
-            "servertype": "openocd",
-            "cwd": "${workspaceFolder}",
-            "executable": "./build/Debug/05_Heap_653.elf",
-            "runToMain": false,
-            "device": "STM32F303RE",
-            "configFiles": [
-                "interface/stlink.cfg",
-                "target/stm32f3x.cfg"
-            ],
-            "svdFile": "${workspaceFolder}/STM32F303.svd",
-            "rtos": "FreeRTOS",
-            "postRestartCommands": ["monitor reset init"]
-        }
+        
 
     ]
 }

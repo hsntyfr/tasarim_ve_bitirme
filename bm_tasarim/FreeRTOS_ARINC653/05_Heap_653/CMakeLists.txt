@@ -11,7 +11,7 @@ cmake_minimum_required(VERSION 3.22)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS ON)
-
+set(CMAKE_C_FLAGS_DEBUG "-O0 -g3")  # Optimizasyon kapalı, max debug info
 
 # Define the build type
 if(NOT CMAKE_BUILD_TYPE)
@@ -62,6 +62,7 @@ set(FREERTOS_HEAP "4" CACHE STRING "FreeRTOS heap implementation")
 set(FREERTOS_PORT GCC_ARM_CM4F CACHE STRING "FreeRTOS port layer selection")
 
 add_subdirectory(MiddleWares/FreeRTOS)
+add_subdirectory(MiddleWares/SEGGER)
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -80,6 +81,7 @@ list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
 target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
     freertos_kernel
+    SEGGER
 
     # Add user defined libraries
 )

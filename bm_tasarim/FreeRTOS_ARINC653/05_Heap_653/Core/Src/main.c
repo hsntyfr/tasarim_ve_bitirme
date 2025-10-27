@@ -1,7 +1,12 @@
 #include "main.h"
+#include "SEGGER_RTT.h"
+
+//extern SEGGER_RTT_CB *rtt;
 
 UART_HandleTypeDef huart3;
 DMA_HandleTypeDef hdma_usart3_tx;
+
+volatile uint32_t blink_ctr = 0;
 
 
 void SystemClock_Config(void);
@@ -9,47 +14,62 @@ static void MX_GPIO_Init(void);
 static void MX_DMA_Init(void);
 static void MX_USART3_UART_Init(void);
 
+/*
 int _write(int file, char *ptr, int len)
 {
     HAL_UART_Transmit(&huart3, (uint8_t *)ptr, len, HAL_MAX_DELAY);
     return len;
 }
+*/
 
-void BlinkTaskOff(void *pvParameters)
+void BlinkTask(void *argument)
 {
-    (void)pvParameters;
+  (void)argument;
+  for(;;)
+  {
+    HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
+    //blink_ctr++;
+    //vTaskDelay(pdMS_TO_TICKS(500));  // 500 ms bekle
+  }
+}
 
+void LED_Toggle_Task(void *pvParameters)
+{
     for(;;)
     {
-      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_RESET);
+        HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_2);
+        //vTaskDelay(pdMS_TO_TICKS(700));
     }
 }
-void BlinkTaskOn(void *pvParameters)
-{
-    (void)pvParameters;
 
-    for(;;)
-    {
-      HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET);
 
-    }
-}
+
 int main(void)
 {
+  DWT->CTRL |= ( 1 << 0 );
 
   HAL_Init();
   SystemClock_Config();
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_USART3_UART_Init();
-  xTaskCreate(BlinkTaskOff, "BlinkOff", 128, NULL, 1, NULL);
-  xTaskCreate(BlinkTaskOn, "BlinkOn", 128, NULL, 1, NULL);
+
+
+  NVIC_SetPriorityGrouping(0);
+  xTaskCreate(BlinkTask, "Blink", 128, NULL, 1, NULL);
+  xTaskCreate(LED_Toggle_Task, "LED_Toggle", 128, NULL, 1, NULL);
 
   
-  uint8_t tx_data[] = "Merhaba DMA!\r\n";
+  //uint8_t tx_data[] = "Merhaba DMA!\r\n";
+  //HAL_UART_Transmit_DMA(&huart3, tx_data, strlen((char*)tx_data));
 
-  HAL_UART_Transmit_DMA(&huart3, tx_data, strlen((char*)tx_data));
+
+  SEGGER_SYSVIEW_Conf();
+  SEGGER_SYSVIEW_Start();
+
   vTaskStartScheduler();
+
+
   while (1)
   {
 

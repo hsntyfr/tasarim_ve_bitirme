@@ -7,6 +7,9 @@ target_include_directories(freertos_kernel_include
         .
         # Note: DEPRECATED but still supported, may be removed in a future release.
         $<$<NOT:$<TARGET_EXISTS:freertos_config>>:${FREERTOS_CONFIG_FILE_DIRECTORY}>
+        ${CMAKE_SOURCE_DIR}/MiddleWares/SEGGER/OS
+        ${CMAKE_SOURCE_DIR}/MiddleWares/SEGGER/SEGGER
+        ${CMAKE_SOURCE_DIR}/MiddleWares/SEGGER/Config
 )
 
 target_link_libraries(freertos_kernel_include
