@@ -29,7 +29,7 @@ void BlinkTask(void *argument)
   {
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
     //blink_ctr++;
-    //vTaskDelay(pdMS_TO_TICKS(500));  // 500 ms bekle
+    vTaskDelay(pdMS_TO_TICKS(500));  // 500 ms bekle
   }
 }
 
@@ -57,7 +57,7 @@ int main(void)
 
   NVIC_SetPriorityGrouping(0);
   xTaskCreate(BlinkTask, "Blink", 128, NULL, 1, NULL);
-  xTaskCreate(LED_Toggle_Task, "LED_Toggle", 128, NULL, 1, NULL);
+  //xTaskCreate(LED_Toggle_Task, "LED_Toggle", 128, NULL, 1, NULL);
 
   
   //uint8_t tx_data[] = "Merhaba DMA!\r\n";

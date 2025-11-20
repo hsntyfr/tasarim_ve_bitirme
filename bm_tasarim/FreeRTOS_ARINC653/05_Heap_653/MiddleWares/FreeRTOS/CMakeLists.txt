@@ -246,8 +246,10 @@ target_sources(freertos_kernel PRIVATE
     stream_buffer.c
     tasks.c
     timers.c
+    portable/MemMang/heap_653.c
 )
 
+#[[
 if (DEFINED FREERTOS_HEAP )
     # User specified a heap implementation add heap implementation to freertos_kernel.
     target_sources(freertos_kernel PRIVATE
@@ -255,6 +257,7 @@ if (DEFINED FREERTOS_HEAP )
         $<IF:$<BOOL:$<FILTER:${FREERTOS_HEAP},EXCLUDE,^[1-5]$>>,${FREERTOS_HEAP},portable/MemMang/heap_${FREERTOS_HEAP}.c>
     )
 endif()
+]] #This block is commented out to force using heap_653.c
 
 
 target_link_libraries(freertos_kernel

@@ -1,0 +1,7 @@
+{
+  "sram_base": "0x20000000",
+  "partitions": [
+    { "name": "APP",    "ram_kb": 1 },
+    { "name": "UPDATE", "ram_kb": 1 }
+  ]
+}
